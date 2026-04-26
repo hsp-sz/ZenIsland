@@ -16,8 +16,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let providerConfigWatcher = ProviderConfigWatcher()
     private let loginItemController = LoginItemController()
     private var providerConfigRefreshToken = 0
-    private let screenPlacementModeDefaultsKey = "HermitFlow.screenPlacementMode"
-    private let fixedScreenIDDefaultsKey = "HermitFlow.fixedScreenID"
+    private let screenPlacementModeDefaultsKey = "ZenIsland.screenPlacementMode"
+    private let fixedScreenIDDefaultsKey = "ZenIsland.fixedScreenID"
     private let debugLogURL = FilePaths.approvalDebugLog
     private let updateChecker = GitHubReleaseUpdateChecker()
     private let updateDownloader = GitHubReleaseAssetDownloader()
@@ -218,6 +218,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             },
             onProviderAuthEnvKeySubmit: { [weak self] providerID, value in
                 self?.updateClaudeProviderUsageAuthEnvKey(providerID: providerID, value: value)
+            },
+            onActivateUsage: { [weak self] in
+                self?.store.refreshUsageState()
             }
         )
     }
@@ -370,13 +373,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 toggleWindowVisibility: #selector(toggleWindowVisibility),
                 selectAutomaticScreenPlacement: #selector(selectAutomaticScreenPlacement),
                 selectFixedScreenPlacement: #selector(selectFixedScreenPlacement(_:)),
-                selectHermitLogo: #selector(selectHermitLogo),
-                selectClawdLogo: #selector(selectClawdLogo),
                 selectZenMuxLogo: #selector(selectZenMuxLogo),
-                selectClaudeCodeLogo: #selector(selectClaudeCodeLogo),
-                selectCodexColorLogo: #selector(selectCodexColorLogo),
-                selectCodexMonoLogo: #selector(selectCodexMonoLogo),
-                selectOpenAILogo: #selector(selectOpenAILogo),
                 selectCustomLogo: #selector(selectCustomLogo),
                 resyncClaudeHooks: #selector(resyncClaudeHooks),
                 checkForUpdates: #selector(checkForUpdates),
@@ -389,14 +386,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func makeStatusBarImage() -> NSImage? {
-        if let imageURL = Bundle.main.url(forResource: "claudecode-bar", withExtension: "png"),
+        if let imageURL = Bundle.main.url(forResource: "zenmux", withExtension: "png"),
            let image = NSImage(contentsOf: imageURL) {
-            image.isTemplate = true
             image.size = NSSize(width: 18, height: 18)
             return image
         }
 
-        return NSImage(systemSymbolName: "terminal.fill", accessibilityDescription: "Dynamic CLI Island")
+        return NSImage(systemSymbolName: "terminal.fill", accessibilityDescription: "ZenIsland")
     }
 
     private func position(
@@ -754,44 +750,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc
-    private func selectHermitLogo() {
-        store.selectLogo(.hermit)
-        updateMenuState()
-    }
-
-    @objc
-    private func selectClawdLogo() {
-        store.selectLogo(.clawd)
-        updateMenuState()
-    }
-
-    @objc
     private func selectZenMuxLogo() {
         store.selectLogo(.zenmux)
-        updateMenuState()
-    }
-
-    @objc
-    private func selectClaudeCodeLogo() {
-        store.selectLogo(.claudeCodeColor)
-        updateMenuState()
-    }
-
-    @objc
-    private func selectCodexColorLogo() {
-        store.selectLogo(.codexColor)
-        updateMenuState()
-    }
-
-    @objc
-    private func selectCodexMonoLogo() {
-        store.selectLogo(.codexMono)
-        updateMenuState()
-    }
-
-    @objc
-    private func selectOpenAILogo() {
-        store.selectLogo(.openAI)
         updateMenuState()
     }
 
@@ -946,7 +906,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             alert.addButton(withTitle: "View Release")
             alert.addButton(withTitle: "Cancel")
         } else {
-            alert.messageText = "HermitFlow Is Up To Date"
+            alert.messageText = "ZenIsland Is Up To Date"
             alert.informativeText = "Current version: \(result.currentVersion)\nLatest version: \(result.latestVersion)"
             alert.addButton(withTitle: "OK")
             alert.addButton(withTitle: "View Release")

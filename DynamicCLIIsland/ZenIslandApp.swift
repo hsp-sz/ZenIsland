@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct HermitFlowApp: App {
+struct ZenIslandApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {

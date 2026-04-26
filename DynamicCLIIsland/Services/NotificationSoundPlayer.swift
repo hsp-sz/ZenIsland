@@ -9,18 +9,18 @@ enum NotificationSoundKind: CaseIterable {
     var customSoundPathDefaultsKey: String {
         switch self {
         case .approval:
-            return "HermitFlow.customApprovalNotificationSoundPath"
+            return "ZenIsland.customApprovalNotificationSoundPath"
         case .completion:
-            return "HermitFlow.customCompletionNotificationSoundPath"
+            return "ZenIsland.customCompletionNotificationSoundPath"
         }
     }
 
     var customSoundBookmarkDefaultsKey: String {
         switch self {
         case .approval:
-            return "HermitFlow.customApprovalNotificationSoundBookmark"
+            return "ZenIsland.customApprovalNotificationSoundBookmark"
         case .completion:
-            return "HermitFlow.customCompletionNotificationSoundBookmark"
+            return "ZenIsland.customCompletionNotificationSoundBookmark"
         }
     }
 

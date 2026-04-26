@@ -1,9 +1,9 @@
 import CoreGraphics
 import XCTest
-@testable import HermitFlow
+@testable import ZenIsland
 
 final class ArchitectureLogicTests: XCTestCase {
-    private let dotMatrixAnimationDefaultsKey = "HermitFlow.dotMatrixAnimationEnabled"
+    private let dotMatrixAnimationDefaultsKey = "ZenIsland.dotMatrixAnimationEnabled"
 
     func testVersionCompareHandlesTagsMissingPatchAndPreReleaseSuffixes() {
         XCTAssertEqual(GitHubReleaseUpdateChecker.compareVersions("v1.2.10", "1.2.9"), .orderedDescending)
@@ -148,7 +148,7 @@ final class ArchitectureLogicTests: XCTestCase {
 
     func testFileContentCacheInvalidatesRecentTextWhenFileSizeChanges() throws {
         let directoryURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("HermitFlowTests-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("ZenIslandTests-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         defer {
             try? FileManager.default.removeItem(at: directoryURL)
@@ -166,7 +166,7 @@ final class ArchitectureLogicTests: XCTestCase {
 
     func testLocalCodexDerivedCacheInvalidatesConversationSummaryWhenSignatureChanges() {
         let cache = LocalCodexDerivedCacheProbe()
-        let url = URL(fileURLWithPath: "/tmp/hermitflow-tests/session.jsonl")
+        let url = URL(fileURLWithPath: "/tmp/zenisland-tests/session.jsonl")
         let originalSignature = FileContentSignature(size: 100, modifiedAt: Date(timeIntervalSince1970: 1_000))
         let changedSignature = FileContentSignature(size: 101, modifiedAt: Date(timeIntervalSince1970: 1_000))
 
@@ -178,7 +178,7 @@ final class ArchitectureLogicTests: XCTestCase {
 
     func testLocalCodexDerivedCacheExpiresShellSnapshotURLAfterTTL() {
         let cache = LocalCodexDerivedCacheProbe()
-        let url = URL(fileURLWithPath: "/tmp/hermitflow-tests/thread.sh")
+        let url = URL(fileURLWithPath: "/tmp/zenisland-tests/thread.sh")
         let now = Date(timeIntervalSince1970: 1_000)
 
         cache.storeShellSnapshotURL(url, for: "thread", now: now)

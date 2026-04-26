@@ -1,5 +1,5 @@
 import XCTest
-@testable import HermitFlow
+@testable import ZenIsland
 
 final class ClaudeProviderConfigStoreTests: XCTestCase {
     func testSettingsJSONFallsBackAndWritesNormalizedText() throws {
@@ -8,7 +8,7 @@ final class ClaudeProviderConfigStoreTests: XCTestCase {
 
         let settingsURL = root.appendingPathComponent("claude-settings-paths.json")
         let store = ClaudeProviderConfigStore(
-            hermitFlowHome: root,
+            zenIslandHome: root,
             claudeSettingsPathsURL: settingsURL,
             claudeProviderUsageConfigURL: root.appendingPathComponent("claude-provider-usage.json")
         )
@@ -27,7 +27,7 @@ final class ClaudeProviderConfigStoreTests: XCTestCase {
 
         let usageURL = root.appendingPathComponent("claude-provider-usage.json")
         let store = ClaudeProviderConfigStore(
-            hermitFlowHome: root,
+            zenIslandHome: root,
             claudeSettingsPathsURL: root.appendingPathComponent("claude-settings-paths.json"),
             claudeProviderUsageConfigURL: usageURL
         )
@@ -57,7 +57,7 @@ final class ClaudeProviderConfigStoreTests: XCTestCase {
 
     private func makeTemporaryDirectory() throws -> URL {
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("HermitFlowTests", isDirectory: true)
+            .appendingPathComponent("ZenIslandTests", isDirectory: true)
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url

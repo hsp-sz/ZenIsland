@@ -1,6 +1,6 @@
 //
 //  ClaudeHookHealthChecker.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Structured local health checks for Claude hook integration.
 //

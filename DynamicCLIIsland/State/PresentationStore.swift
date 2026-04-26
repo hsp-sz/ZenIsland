@@ -1,6 +1,6 @@
 //
 //  PresentationStore.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 3 store decomposition.
 //
@@ -70,7 +70,7 @@ enum AskUserQuestionHandlingMode: String, CaseIterable {
     var menuTitle: String {
         switch self {
         case .takeOver:
-            return "HermitFlow 回答"
+            return "ZenIsland 回答"
         case .mirror:
             return "Claude 原生回答"
         }
@@ -81,7 +81,7 @@ enum AskUserQuestionHandlingMode: String, CaseIterable {
         case .takeOver:
             return "Answer here to send the response back to Claude Code."
         case .mirror:
-            return "Answer in Claude CLI or the Claude extension. HermitFlow is mirroring this prompt only."
+            return "Answer in Claude CLI or the Claude extension. ZenIsland is mirroring this prompt only."
         }
     }
 }
@@ -145,12 +145,12 @@ final class PresentationStore: ObservableObject {
     private let externalDisplayInlineQuestionMaxWidth: CGFloat = 500
     private let externalDisplayPanelMaxWidthWithoutApproval: CGFloat = 560
     private let externalDisplayPanelMaxWidthWithApproval: CGFloat = 640
-    private let logoDefaultsKey = "HermitFlow.selectedLogo"
-    private let customLogoPathDefaultsKey = "HermitFlow.customLeftLogoPath"
-    private let soundMutedDefaultsKey = "HermitFlow.soundMuted"
-    private let approvalDefaultFocusDefaultsKey = "HermitFlow.approvalDefaultFocus"
-    private let usageDisplayTypeDefaultsKey = "HermitFlow.usageDisplayType"
-    private let dotMatrixAnimationEnabledDefaultsKey = "HermitFlow.dotMatrixAnimationEnabled"
+    private let logoDefaultsKey = "ZenIsland.selectedLogo"
+    private let customLogoPathDefaultsKey = "ZenIsland.customLeftLogoPath"
+    private let soundMutedDefaultsKey = "ZenIsland.soundMuted"
+    private let approvalDefaultFocusDefaultsKey = "ZenIsland.approvalDefaultFocus"
+    private let usageDisplayTypeDefaultsKey = "ZenIsland.usageDisplayType"
+    private let dotMatrixAnimationEnabledDefaultsKey = "ZenIsland.dotMatrixAnimationEnabled"
 
     // TODO: These timing fields are still coupled to legacy AppDelegate behaviors.
     private var hasHoveredInsidePanelSinceShown = false
@@ -171,7 +171,7 @@ final class PresentationStore: ObservableObject {
 
     init() {
         let storedLogo = UserDefaults.standard.string(forKey: logoDefaultsKey)
-        selectedLogo = BrandLogo(rawValue: storedLogo ?? "") ?? .clawd
+        selectedLogo = BrandLogo(rawValue: storedLogo ?? "") ?? .zenmux
         customLogoPath = Self.normalizedCustomLogoPath(
             UserDefaults.standard.string(forKey: customLogoPathDefaultsKey)
         )
@@ -187,7 +187,11 @@ final class PresentationStore: ObservableObject {
         approvalDefaultFocus = ApprovalDefaultFocusOption(rawValue: storedApprovalDefaultFocus ?? "") ?? .accept
         let storedUsageDisplayType = UserDefaults.standard.string(forKey: usageDisplayTypeDefaultsKey)
         usageDisplayType = UsageDisplayType(rawValue: storedUsageDisplayType ?? "") ?? .remaining
-        dotMatrixAnimationEnabled = UserDefaults.standard.bool(forKey: dotMatrixAnimationEnabledDefaultsKey)
+        if UserDefaults.standard.object(forKey: dotMatrixAnimationEnabledDefaultsKey) != nil {
+            dotMatrixAnimationEnabled = UserDefaults.standard.bool(forKey: dotMatrixAnimationEnabledDefaultsKey)
+        } else {
+            dotMatrixAnimationEnabled = true
+        }
     }
 
     var windowSize: CGSize {
@@ -522,7 +526,7 @@ final class PresentationStore: ObservableObject {
         setCustomLogoPath(nil)
         try? FileManager.default.removeItem(at: FilePaths.customLeftLogo)
         if selectedLogo == .custom {
-            selectLogo(.clawd)
+            selectLogo(.zenmux)
         }
     }
 
@@ -568,8 +572,8 @@ final class PresentationStore: ObservableObject {
         let defaults = UserDefaults.standard
         let approvalPathKey = NotificationSoundKind.approval.customSoundPathDefaultsKey
         let approvalBookmarkKey = NotificationSoundKind.approval.customSoundBookmarkDefaultsKey
-        let legacyPathKey = "HermitFlow.customNotificationSoundPath"
-        let legacyBookmarkKey = "HermitFlow.customNotificationSoundBookmark"
+        let legacyPathKey = "ZenIsland.customNotificationSoundPath"
+        let legacyBookmarkKey = "ZenIsland.customNotificationSoundBookmark"
 
         guard defaults.string(forKey: approvalPathKey) == nil,
               defaults.data(forKey: approvalBookmarkKey) == nil else {

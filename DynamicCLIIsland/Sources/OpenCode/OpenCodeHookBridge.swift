@@ -1,6 +1,6 @@
 //
 //  OpenCodeHookBridge.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local OpenCode plugin callback bridge.
 //
@@ -184,8 +184,8 @@ final class OpenCodeHookBridge: @unchecked Sendable {
 
     let listenerPort: UInt16 = 46822
 
-    private let queue = DispatchQueue(label: "HermitFlow.openCodeHookBridge")
-    private let listenerQueue = DispatchQueue(label: "HermitFlow.openCodeHookListener")
+    private let queue = DispatchQueue(label: "ZenIsland.openCodeHookBridge")
+    private let listenerQueue = DispatchQueue(label: "ZenIsland.openCodeHookListener")
     private let successHold: TimeInterval = 1.25
     private let failureHold: TimeInterval = 2.0
     private let staleSessionLimit: TimeInterval = 10 * 60
@@ -353,7 +353,7 @@ final class OpenCodeHookBridge: @unchecked Sendable {
                         source: "OpenCode",
                         severity: .warning,
                         message: lastErrorMessage ?? "OpenCode hook listener is not ready.",
-                        recoverySuggestion: "Restart HermitFlow to restart the local OpenCode hook callback listener.",
+                        recoverySuggestion: "Restart ZenIsland to restart the local OpenCode hook callback listener.",
                         isRepairable: true
                     )
                 )
@@ -481,7 +481,7 @@ final class OpenCodeHookBridge: @unchecked Sendable {
     private func handle(request: OpenCodeHTTPRequest, on connection: NWConnection) {
         switch (request.method, request.path) {
         case ("GET", "/health"):
-            sendJSON(["ok": true, "app": "HermitFlow", "source": "OpenCode", "port": listenerPort], on: connection)
+            sendJSON(["ok": true, "app": "ZenIsland", "source": "OpenCode", "port": listenerPort], on: connection)
         case ("GET", "/opencode/state"):
             let body = queue.sync {
                 let now = Date()
@@ -588,7 +588,7 @@ final class OpenCodeHookBridge: @unchecked Sendable {
         case "server.connected":
             appendRecentEvent(context: context, transition: "metadata", ignoredReason: "server-only", now: now)
             return
-        case "hermitflow.debug":
+        case "zenisland.debug":
             applyDebugEvent(payload: payload, now: now)
             appendRecentEvent(context: context, transition: "debug", ignoredReason: nil, now: now)
         case "permission.asked":
@@ -890,7 +890,7 @@ final class OpenCodeHookBridge: @unchecked Sendable {
     private func messageString(for decision: ApprovalDecision) -> String? {
         switch decision {
         case .reject:
-            return "Rejected in HermitFlow"
+            return "Rejected in ZenIsland"
         case .accept, .acceptAll:
             return nil
         }

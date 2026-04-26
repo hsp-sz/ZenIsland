@@ -1,6 +1,6 @@
 //
 //  CodexSQLiteReader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local Codex SQLite discovery for startup recovery and diagnostics.
 //

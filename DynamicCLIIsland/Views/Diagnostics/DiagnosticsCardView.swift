@@ -1,6 +1,6 @@
 //
 //  DiagnosticsCardView.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Structured source diagnostics panel section.
 //

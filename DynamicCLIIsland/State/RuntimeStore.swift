@@ -1,6 +1,6 @@
 //
 //  RuntimeStore.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 4 reducer-backed runtime store.
 //
@@ -82,7 +82,7 @@ final class LocalSourceFileWatcher: @unchecked Sendable {
 
     init(
         debounceInterval: TimeInterval = 0.25,
-        queue: DispatchQueue = DispatchQueue(label: "HermitFlow.localSourceFileWatcher", qos: .utility)
+        queue: DispatchQueue = DispatchQueue(label: "ZenIsland.localSourceFileWatcher", qos: .utility)
     ) {
         self.debounceInterval = debounceInterval
         self.queue = queue
@@ -183,7 +183,7 @@ final class LocalSourceFileWatcher: @unchecked Sendable {
         let codexSessions = FilePaths.codexHome.appendingPathComponent("sessions", isDirectory: true)
         let codexHistory = FilePaths.codexHome.appendingPathComponent("history.jsonl", isDirectory: false)
         let codexShellSnapshots = FilePaths.codexHome.appendingPathComponent("shell_snapshots", isDirectory: true)
-        let claudeQuestions = FilePaths.hermitFlowHome.appendingPathComponent("claude-questions", isDirectory: true)
+        let claudeQuestions = FilePaths.zenIslandHome.appendingPathComponent("claude-questions", isDirectory: true)
         let claudeLatestQuestion = claudeQuestions.appendingPathComponent("latest-question.json", isDirectory: false)
 
         return [
@@ -283,7 +283,7 @@ final class RuntimeStore: ObservableObject {
     private let codexUsageRefreshMinimumInterval: TimeInterval = 120.0
     private let openCodeUsageRefreshMinimumInterval: TimeInterval = 120.0
     private let usageFailureBackoffInterval: TimeInterval = 5 * 60
-    private let accessibilityPromptDismissedDefaultsKey = "HermitFlow.accessibilityPromptDismissed"
+    private let accessibilityPromptDismissedDefaultsKey = "ZenIsland.accessibilityPromptDismissed"
     private let aggregateSuccessFlashDuration: TimeInterval = 1.25
     private let aggregateFailureFlashDuration: TimeInterval = 2.0
 
@@ -378,9 +378,9 @@ final class RuntimeStore: ObservableObject {
         codexSQLiteReader: CodexSQLiteReader = CodexSQLiteReader(),
         codexSessionReader: CodexSessionReader = CodexSessionReader(),
         codexLogReader: CodexLogReader = CodexLogReader(),
-        localCodexQueue: DispatchQueue = DispatchQueue(label: "HermitFlow.localCodex", qos: .utility),
-        localApprovalQueue: DispatchQueue = DispatchQueue(label: "HermitFlow.localApproval", qos: .userInitiated),
-        usageQueue: DispatchQueue = DispatchQueue(label: "HermitFlow.usage", qos: .utility),
+        localCodexQueue: DispatchQueue = DispatchQueue(label: "ZenIsland.localCodex", qos: .utility),
+        localApprovalQueue: DispatchQueue = DispatchQueue(label: "ZenIsland.localApproval", qos: .userInitiated),
+        usageQueue: DispatchQueue = DispatchQueue(label: "ZenIsland.usage", qos: .utility),
         externalProgressSource: ExternalProgressFileSource = ExternalProgressFileSource(),
         demoProgressSource: DemoProgressSource = DemoProgressSource(),
         accessibilityApprovalExecutor: AccessibilityApprovalExecutor? = nil,

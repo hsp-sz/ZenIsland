@@ -1,6 +1,6 @@
 //
 //  DiagnosticsFormatter.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  UI-friendly formatting helpers for structured source diagnostics.
 //

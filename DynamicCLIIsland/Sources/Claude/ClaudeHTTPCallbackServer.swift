@@ -1,6 +1,6 @@
 //
 //  ClaudeHTTPCallbackServer.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Thin boundary around the local Claude hook callback listener.
 //

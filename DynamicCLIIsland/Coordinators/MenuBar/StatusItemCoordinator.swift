@@ -7,13 +7,7 @@ final class StatusItemCoordinator {
         let toggleWindowVisibility: Selector
         let selectAutomaticScreenPlacement: Selector
         let selectFixedScreenPlacement: Selector
-        let selectHermitLogo: Selector
-        let selectClawdLogo: Selector
         let selectZenMuxLogo: Selector
-        let selectClaudeCodeLogo: Selector
-        let selectCodexColorLogo: Selector
-        let selectCodexMonoLogo: Selector
-        let selectOpenAILogo: Selector
         let selectCustomLogo: Selector
         let resyncClaudeHooks: Selector
         let checkForUpdates: Selector
@@ -27,13 +21,7 @@ final class StatusItemCoordinator {
     private var screenMenuItem: NSMenuItem?
     private var automaticScreenMenuItem: NSMenuItem?
     private var fixedScreenMenuItems: [NSMenuItem] = []
-    private var hermitLogoMenuItem: NSMenuItem?
-    private var clawdLogoMenuItem: NSMenuItem?
     private var zenMuxLogoMenuItem: NSMenuItem?
-    private var claudeCodeLogoMenuItem: NSMenuItem?
-    private var codexColorLogoMenuItem: NSMenuItem?
-    private var codexMonoLogoMenuItem: NSMenuItem?
-    private var openAILogoMenuItem: NSMenuItem?
     private var customLogoMenuItem: NSMenuItem?
     private var resyncClaudeHooksMenuItem: NSMenuItem?
     private var checkForUpdatesMenuItem: NSMenuItem?
@@ -87,22 +75,10 @@ final class StatusItemCoordinator {
 
         let logoMenuItem = NSMenuItem(title: "Left Logo", action: nil, keyEquivalent: "")
         let logoSubmenu = NSMenu(title: "Left Logo")
-        let hermitLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.hermit.menuTitle, action: selectors.selectHermitLogo)
-        let clawdLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.clawd.menuTitle, action: selectors.selectClawdLogo)
-        let claudeCodeLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.claudeCodeColor.menuTitle, action: selectors.selectClaudeCodeLogo)
-        let codexColorLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.codexColor.menuTitle, action: selectors.selectCodexColorLogo)
-        let codexMonoLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.codexMono.menuTitle, action: selectors.selectCodexMonoLogo)
-        let openAILogoMenuItem = menuItem(title: ProgressStore.BrandLogo.openAI.menuTitle, action: selectors.selectOpenAILogo)
         let zenMuxLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.zenmux.menuTitle, action: selectors.selectZenMuxLogo)
         let customLogoMenuItem = menuItem(title: ProgressStore.BrandLogo.custom.menuTitle, action: selectors.selectCustomLogo)
 
         [
-            hermitLogoMenuItem,
-            clawdLogoMenuItem,
-            claudeCodeLogoMenuItem,
-            codexColorLogoMenuItem,
-            codexMonoLogoMenuItem,
-            openAILogoMenuItem,
             zenMuxLogoMenuItem,
             customLogoMenuItem
         ].forEach { logoSubmenu.addItem($0) }
@@ -136,7 +112,7 @@ final class StatusItemCoordinator {
         if let button = statusItem.button {
             setImage(image)
             button.imagePosition = .imageOnly
-            setToolTip("Dynamic CLI Island")
+            setToolTip("ZenIsland")
         }
 
         setMenu(menu)
@@ -144,13 +120,7 @@ final class StatusItemCoordinator {
         self.visibilityMenuItem = visibilityMenuItem
         self.screenMenuItem = screenMenuItem
         self.automaticScreenMenuItem = automaticScreenMenuItem
-        self.hermitLogoMenuItem = hermitLogoMenuItem
-        self.clawdLogoMenuItem = clawdLogoMenuItem
         self.zenMuxLogoMenuItem = zenMuxLogoMenuItem
-        self.claudeCodeLogoMenuItem = claudeCodeLogoMenuItem
-        self.codexColorLogoMenuItem = codexColorLogoMenuItem
-        self.codexMonoLogoMenuItem = codexMonoLogoMenuItem
-        self.openAILogoMenuItem = openAILogoMenuItem
         self.customLogoMenuItem = customLogoMenuItem
         self.resyncClaudeHooksMenuItem = resyncClaudeHooksMenuItem
         self.checkForUpdatesMenuItem = checkForUpdatesMenuItem
@@ -221,13 +191,7 @@ final class StatusItemCoordinator {
             }
             item.state = isSelectedFixedScreen(CGDirectDisplayID(representedDisplayID.uint32Value)) ? .on : .off
         }
-        hermitLogoMenuItem?.state = selectedLogo == .hermit ? .on : .off
-        clawdLogoMenuItem?.state = selectedLogo == .clawd ? .on : .off
         zenMuxLogoMenuItem?.state = selectedLogo == .zenmux ? .on : .off
-        claudeCodeLogoMenuItem?.state = selectedLogo == .claudeCodeColor ? .on : .off
-        codexColorLogoMenuItem?.state = selectedLogo == .codexColor ? .on : .off
-        codexMonoLogoMenuItem?.state = selectedLogo == .codexMono ? .on : .off
-        openAILogoMenuItem?.state = selectedLogo == .openAI ? .on : .off
         customLogoMenuItem?.state = selectedLogo == .custom ? .on : .off
         customLogoMenuItem?.isEnabled = customLogoPath != nil
         _ = resyncClaudeHooksMenuItem

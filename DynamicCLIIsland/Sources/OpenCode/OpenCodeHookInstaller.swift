@@ -1,8 +1,8 @@
 //
 //  OpenCodeHookInstaller.swift
-//  HermitFlow
+//  ZenIsland
 //
-//  Installs HermitFlow's managed OpenCode plugin.
+//  Installs ZenIsland's managed OpenCode plugin.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ struct OpenCodeHookInstaller: HookInstaller {
     private let packageURL: URL
     private let bridge: OpenCodeHookBridge
     private let fileManager: FileManager
-    private let marker = "HERMITFLOW_MANAGED_OPENCODE_PLUGIN"
+    private let marker = "ZENISLAND_MANAGED_OPENCODE_PLUGIN"
 
     init(
         pluginDirectory: URL = FilePaths.openCodePluginsDirectory,
@@ -23,7 +23,7 @@ struct OpenCodeHookInstaller: HookInstaller {
         fileManager: FileManager = .default
     ) {
         self.pluginDirectory = pluginDirectory
-        self.pluginURL = pluginDirectory.appendingPathComponent("hermitflow.js", isDirectory: false)
+        self.pluginURL = pluginDirectory.appendingPathComponent("zenisland.js", isDirectory: false)
         self.configURL = configURL
         self.packageURL = configURL.deletingLastPathComponent().appendingPathComponent("package.json", isDirectory: false)
         self.bridge = bridge
@@ -63,7 +63,7 @@ struct OpenCodeHookInstaller: HookInstaller {
                     source: "OpenCode",
                     severity: .warning,
                     message: "The managed OpenCode plugin is missing.",
-                    recoverySuggestion: "Restart HermitFlow or resync integrations to recreate the plugin.",
+                    recoverySuggestion: "Restart ZenIsland or resync integrations to recreate the plugin.",
                     isRepairable: true
                 )
             )
@@ -73,8 +73,8 @@ struct OpenCodeHookInstaller: HookInstaller {
                 SourceErrorMapper.issue(
                     source: "OpenCode",
                     severity: .warning,
-                    message: "The OpenCode HermitFlow plugin file is not managed by this app.",
-                    recoverySuggestion: "Move the custom file aside and restart HermitFlow to install the managed plugin.",
+                    message: "The OpenCode ZenIsland plugin file is not managed by this app.",
+                    recoverySuggestion: "Move the custom file aside and restart ZenIsland to install the managed plugin.",
                     isRepairable: true
                 )
             )
@@ -92,7 +92,7 @@ struct OpenCodeHookInstaller: HookInstaller {
             if !data.isEmpty {
                 guard let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
                     throw NSError(
-                        domain: "HermitFlow.OpenCodeHookInstaller",
+                        domain: "ZenIsland.OpenCodeHookInstaller",
                         code: 1,
                         userInfo: [NSLocalizedDescriptionKey: "OpenCode config is not a JSON object."]
                     )
@@ -107,12 +107,12 @@ struct OpenCodeHookInstaller: HookInstaller {
             if let string = item as? String {
                 return string == pluginPath
                     || string == pluginURL.path(percentEncoded: false)
-                    || string.hasSuffix("/plugins/hermitflow.js")
+                    || string.hasSuffix("/plugins/zenisland.js")
             }
             if let pair = item as? [Any], let string = pair.first as? String {
                 return string == pluginPath
                     || string == pluginURL.path(percentEncoded: false)
-                    || string.hasSuffix("/plugins/hermitflow.js")
+                    || string.hasSuffix("/plugins/zenisland.js")
             }
             return false
         }
@@ -153,10 +153,10 @@ struct OpenCodeHookInstaller: HookInstaller {
     private func managedPluginSource() -> String {
         """
         // \(marker)
-        // This file is managed by HermitFlow. Local custom OpenCode plugins should use a different filename.
+        // This file is managed by ZenIsland. Local custom OpenCode plugins should use a different filename.
         import { tool } from "@opencode-ai/plugin";
 
-        const CALLBACK_URL = process.env.HERMITFLOW_OPENCODE_CALLBACK_URL || "http://127.0.0.1:\(bridge.listenerPort)/opencode/event";
+        const CALLBACK_URL = process.env.ZENISLAND_OPENCODE_CALLBACK_URL || "http://127.0.0.1:\(bridge.listenerPort)/opencode/event";
         const DECISION_URL = CALLBACK_URL.replace(/\\/opencode\\/event$/, "/opencode/approval-decision");
         const QUESTION_DECISION_URL = CALLBACK_URL.replace(/\\/opencode\\/event$/, "/opencode/question-decision");
         const alwaysAllowedPermissions = new Set();
@@ -177,7 +177,7 @@ struct OpenCodeHookInstaller: HookInstaller {
           "question.asked",
           "question.replied",
           "question.dismissed",
-          "hermitflow.debug",
+          "zenisland.debug",
         ]);
 
         function safe(value) {
@@ -203,7 +203,7 @@ struct OpenCodeHookInstaller: HookInstaller {
             ?? (host && port ? `http://${host}:${port}` : undefined);
           const payload = {
             source: "opencode",
-            plugin: "hermitflow",
+            plugin: "zenisland",
             version: 1,
             type,
             input: safe(input),
@@ -223,13 +223,13 @@ struct OpenCodeHookInstaller: HookInstaller {
               body: JSON.stringify(payload),
             });
           } catch {
-            // HermitFlow may not be running. OpenCode should continue normally.
+            // ZenIsland may not be running. OpenCode should continue normally.
           }
         }
 
         async function debug(stage, input, context, message) {
           await send(
-            "hermitflow.debug",
+            "zenisland.debug",
             {
               stage,
               message,
@@ -427,7 +427,7 @@ struct OpenCodeHookInstaller: HookInstaller {
           }
 
           await debug("permission.asked.wait", input, context);
-          const decision = await waitForHermitFlowDecision(requestID, sessionIDFrom(input));
+          const decision = await waitForZenIslandDecision(requestID, sessionIDFrom(input));
           if (!decision?.decision) {
             await debug("permission.asked.no-decision", input, context);
             return;
@@ -437,7 +437,7 @@ struct OpenCodeHookInstaller: HookInstaller {
           await replyToOpenCode(input, context, decision);
         }
 
-        async function waitForHermitFlowDecision(requestID, sessionID) {
+        async function waitForZenIslandDecision(requestID, sessionID) {
           if (!requestID) return undefined;
 
           const deadline = Date.now() + 120_000;
@@ -522,7 +522,7 @@ struct OpenCodeHookInstaller: HookInstaller {
           };
         }
 
-        async function waitForHermitFlowQuestionDecision(questionID, sessionID) {
+        async function waitForZenIslandQuestionDecision(questionID, sessionID) {
           if (!questionID) return undefined;
 
           const deadline = Date.now() + 120_000;
@@ -558,10 +558,10 @@ struct OpenCodeHookInstaller: HookInstaller {
           return `User has answered your questions: "${question}"="${answer}". You can now continue with the user's answers in mind.`;
         }
 
-        async function executeHermitFlowQuestion(args, context) {
+        async function executeZenIslandQuestion(args, context) {
           const questionID = questionIDFor(args, context);
           await send("question.asked", questionAskEvent(args, context, questionID), null, context);
-          const decision = await waitForHermitFlowQuestionDecision(questionID, context?.sessionID);
+          const decision = await waitForZenIslandQuestionDecision(questionID, context?.sessionID);
           if (!decision || decision.status === "dismissed") {
             await send("question.dismissed", questionReplyEvent(args, context, questionID, decision), null, context);
             throw new Error("The user dismissed this question");
@@ -589,7 +589,7 @@ struct OpenCodeHookInstaller: HookInstaller {
           }
 
           await send("permission.asked", permissionAskEvent(input), output, context);
-          const decision = await waitForHermitFlowDecision(requestID, sessionIDFrom(input));
+          const decision = await waitForZenIslandDecision(requestID, sessionIDFrom(input));
           if (!decision?.decision) {
             await debug("permission.ask.no-decision", input, context);
             return output;
@@ -607,7 +607,7 @@ struct OpenCodeHookInstaller: HookInstaller {
           return output;
         }
 
-        export const HermitFlowPlugin = async (context) => {
+        export const ZenIslandPlugin = async (context) => {
           return {
             tool: {
               question: tool({
@@ -625,7 +625,7 @@ struct OpenCodeHookInstaller: HookInstaller {
                     })).optional(),
                   })),
                 },
-                execute: executeHermitFlowQuestion,
+                execute: executeZenIslandQuestion,
               }),
             },
             event: async (input) => {
@@ -654,8 +654,8 @@ struct OpenCodeHookInstaller: HookInstaller {
           };
         };
 
-        export const server = HermitFlowPlugin;
-        export default HermitFlowPlugin;
+        export const server = ZenIslandPlugin;
+        export default ZenIslandPlugin;
         """
     }
 }

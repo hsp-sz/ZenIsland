@@ -1,6 +1,6 @@
 //
 //  ClaudeHookInstaller.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local-only installer wrapper for Claude hook lifecycle management.
 //

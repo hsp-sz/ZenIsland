@@ -1334,7 +1334,7 @@ private final class BrandLogoImageCache: ObservableObject {
             }
         }
 
-        let resourceName = logo == .custom ? IslandBrandLogo.clawd.resourceName : logo.resourceName
+        let resourceName = logo == .custom ? IslandBrandLogo.zenmux.resourceName : logo.resourceName
         return cachedImage(key: "bundle:\(resourceName)") {
             guard let imageURL = Bundle.main.url(forResource: resourceName, withExtension: "png") else {
                 return nil

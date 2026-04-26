@@ -1,6 +1,6 @@
 //
 //  ClaudeUsageLoader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local-first Claude usage loader with third-party provider fallback.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 enum ClaudeUsageLoader {
-    private static let customSettingsPathsEnvironmentKey = "HERMITFLOW_CLAUDE_SETTINGS_PATHS"
+    private static let customSettingsPathsEnvironmentKey = "ZENISLAND_CLAUDE_SETTINGS_PATHS"
     private static let claudeShellEnvironmentPrefixes = ["ANTHROPIC_"]
     private static let requestTimeout: TimeInterval = 5
     private static let defaultCommandTimeout: TimeInterval = 5
@@ -524,7 +524,7 @@ enum ClaudeUsageLoader {
         }
 
         try fileManager.createDirectory(
-            at: FilePaths.hermitFlowHome,
+            at: FilePaths.zenIslandHome,
             withIntermediateDirectories: true,
             attributes: nil
         )
@@ -1248,86 +1248,6 @@ struct ClaudeProviderUsageConfig: Codable, Hashable {
         ),
         providers: [
             ClaudeProviderDefinition(
-                id: "kimi",
-                displayName: "Kimi",
-                match: ClaudeProviderMatchRule(
-                    baseURLHosts: ["api.kimi.com"],
-                    baseURLPrefixes: ["https://api.kimi.com/coding"],
-                    modelPrefixes: ["kimi", "moonshot"]
-                ),
-                usageRequest: ClaudeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://api.kimi.com/coding/v1/usages",
-                    authEnvKey: "ANTHROPIC_AUTH_TOKEN",
-                    authHeaderName: nil,
-                    authPrefix: "Bearer ",
-                    headers: [
-                        "Accept": "application/json"
-                    ],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: ClaudeProviderResponseMapping(
-                    fiveHour: nil,
-                    sevenDay: nil,
-                    fallbackWindow: nil
-                )
-            ),
-            ClaudeProviderDefinition(
-                id: "zhipu-cn",
-                displayName: "Zhipu",
-                match: ClaudeProviderMatchRule(
-                    baseURLHosts: ["open.bigmodel.cn", "bigmodel.cn"],
-                    baseURLPrefixes: ["https://open.bigmodel.cn", "https://bigmodel.cn"],
-                    modelPrefixes: ["glm", "zhipu"]
-                ),
-                usageRequest: ClaudeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://api.z.ai/api/monitor/usage/quota/limit",
-                    authEnvKey: "ANTHROPIC_AUTH_TOKEN",
-                    authHeaderName: "Authorization",
-                    authPrefix: "",
-                    headers: [
-                        "Content-Type": "application/json",
-                        "Accept-Language": "en-US,en"
-                    ],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: ClaudeProviderResponseMapping(
-                    fiveHour: nil,
-                    sevenDay: nil,
-                    fallbackWindow: nil
-                )
-            ),
-            ClaudeProviderDefinition(
-                id: "zhipu-en",
-                displayName: "Zhipu",
-                match: ClaudeProviderMatchRule(
-                    baseURLHosts: ["api.z.ai"],
-                    baseURLPrefixes: ["https://api.z.ai"],
-                    modelPrefixes: ["glm", "zhipu"]
-                ),
-                usageRequest: ClaudeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://api.z.ai/api/monitor/usage/quota/limit",
-                    authEnvKey: "ANTHROPIC_AUTH_TOKEN",
-                    authHeaderName: "Authorization",
-                    authPrefix: "",
-                    headers: [
-                        "Content-Type": "application/json",
-                        "Accept-Language": "en-US,en"
-                    ],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: ClaudeProviderResponseMapping(
-                    fiveHour: nil,
-                    sevenDay: nil,
-                    fallbackWindow: nil
-                )
-            ),
-            ClaudeProviderDefinition(
                 id: "zenmux",
                 displayName: "ZenMux",
                 match: ClaudeProviderMatchRule(
@@ -1366,48 +1286,6 @@ struct ClaudeProviderUsageConfig: Codable, Hashable {
                         remainingPercentagePaths: [],
                         resetAtPaths: ["data.quota_5_hour.resets_at", "data.quota_7_day.resets_at"],
                         labelHints: ["quota", "quota_5_hour", "quota_7_day"]
-                    )
-                )
-            ),
-            ClaudeProviderDefinition(
-                id: "minmax",
-                displayName: "MinMax",
-                match: ClaudeProviderMatchRule(
-                    baseURLHosts: ["minimaxi.com", "minmax"],
-                    baseURLPrefixes: ["https://www.minimaxi.com/", "https://api.minimax.chat/"],
-                    modelPrefixes: ["minmax", "minimax"]
-                ),
-                usageRequest: ClaudeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://www.minimaxi.com/v1/api/openplatform/coding_plan/remains",
-                    authEnvKey: "ANTHROPIC_AUTH_TOKEN",
-                    authHeaderName: nil,
-                    authPrefix: "Bearer ",
-                    headers: [:],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: ClaudeProviderResponseMapping(
-                    fiveHour: ClaudeProviderWindowMapping(
-                        objectPaths: ["five_hour", "data.five_hour", "remains.five_hour"],
-                        usedPercentagePaths: ["five_hour.used_percentage", "data.five_hour.used_percentage", "remains.five_hour.used_percentage"],
-                        remainingPercentagePaths: ["five_hour.remaining_percentage", "data.five_hour.remaining_percentage", "remains.five_hour.remaining_percentage"],
-                        resetAtPaths: ["five_hour.resets_at", "data.five_hour.resets_at", "remains.five_hour.resets_at"],
-                        labelHints: ["five_hour", "5h", "hour"]
-                    ),
-                    sevenDay: ClaudeProviderWindowMapping(
-                        objectPaths: ["seven_day", "data.seven_day", "remains.seven_day"],
-                        usedPercentagePaths: ["seven_day.used_percentage", "data.seven_day.used_percentage", "remains.seven_day.used_percentage"],
-                        remainingPercentagePaths: ["seven_day.remaining_percentage", "data.seven_day.remaining_percentage", "remains.seven_day.remaining_percentage"],
-                        resetAtPaths: ["seven_day.resets_at", "data.seven_day.resets_at", "remains.seven_day.resets_at"],
-                        labelHints: ["seven_day", "7d", "week"]
-                    ),
-                    fallbackWindow: ClaudeProviderWindowMapping(
-                        objectPaths: ["remains", "data.remains", "quota", "data.quota"],
-                        usedPercentagePaths: ["remains.used_percentage", "data.remains.used_percentage", "quota.used_percentage", "data.quota.used_percentage"],
-                        remainingPercentagePaths: ["remains.remaining_percentage", "data.remains.remaining_percentage", "quota.remaining_percentage", "data.quota.remaining_percentage"],
-                        resetAtPaths: ["remains.resets_at", "data.remains.resets_at", "quota.resets_at", "data.quota.resets_at"],
-                        labelHints: ["remains", "quota", "remain"]
                     )
                 )
             )

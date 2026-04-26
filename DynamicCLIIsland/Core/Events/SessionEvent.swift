@@ -1,6 +1,6 @@
 //
 //  SessionEvent.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 4 event model.
 //

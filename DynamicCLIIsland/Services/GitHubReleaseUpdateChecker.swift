@@ -1,6 +1,6 @@
 //
 //  GitHubReleaseUpdateChecker.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Minimal GitHub Releases-based update checker for manual update discovery.
 //
@@ -41,7 +41,7 @@ struct GitHubReleaseUpdateChecker {
 
     init(
         owner: String = "0x0Bke",
-        repository: String = "HermitFlow",
+        repository: String = "ZenIsland",
         session: URLSession = .shared
     ) {
         self.owner = owner
@@ -64,7 +64,7 @@ struct GitHubReleaseUpdateChecker {
 
         var request = URLRequest(url: url)
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        request.setValue("HermitFlow", forHTTPHeaderField: "User-Agent")
+        request.setValue("ZenIsland", forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 15
 
         let (data, response) = try await session.data(for: request)
@@ -121,11 +121,11 @@ struct GitHubReleaseUpdateChecker {
 
     private static var preferredAssetNamesForCurrentArchitecture: [String] {
         #if arch(arm64)
-        return ["HermitFlow-arm64.pkg", "HermitFlow-arm64.dmg"]
+        return ["ZenIsland-arm64.pkg", "ZenIsland-arm64.dmg"]
         #elseif arch(x86_64)
-        return ["HermitFlow-intel.pkg", "HermitFlow-intel.dmg", "HermitFlow-x86_64.pkg", "HermitFlow-x86_64.dmg"]
+        return ["ZenIsland-intel.pkg", "ZenIsland-intel.dmg", "ZenIsland-x86_64.pkg", "ZenIsland-x86_64.dmg"]
         #else
-        return ["HermitFlow.pkg", "HermitFlow.dmg"]
+        return ["ZenIsland.pkg", "ZenIsland.dmg"]
         #endif
     }
 

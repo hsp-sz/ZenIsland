@@ -1,6 +1,6 @@
 //
 //  CodexSessionReader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local Codex session directory discovery for fallback reconciliation.
 //

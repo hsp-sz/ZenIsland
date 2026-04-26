@@ -1,6 +1,6 @@
 //
 //  DiagnosticIssue.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Structured local diagnostics model for source health reporting.
 //

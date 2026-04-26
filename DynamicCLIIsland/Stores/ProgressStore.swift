@@ -1,6 +1,6 @@
 //
 //  ProgressStore.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Legacy compatibility facade for the Phase 3 store split.
 //
@@ -16,7 +16,7 @@ final class ClaudeQuestionFileWatcher: @unchecked Sendable {
         let source: DispatchSourceFileSystemObject
     }
 
-    private let queue = DispatchQueue(label: "HermitFlow.claudeQuestionFileWatcher", qos: .utility)
+    private let queue = DispatchQueue(label: "ZenIsland.claudeQuestionFileWatcher", qos: .utility)
     private let debounceInterval: TimeInterval = 0.25
     private var monitors: [Monitor] = []
     private var pendingRefresh: DispatchWorkItem?
@@ -30,7 +30,7 @@ final class ClaudeQuestionFileWatcher: @unchecked Sendable {
         queue.sync {
             stopLocked()
             self.onChange = onChange
-            let rootURL = FilePaths.hermitFlowHome.appendingPathComponent("claude-questions", isDirectory: true)
+            let rootURL = FilePaths.zenIslandHome.appendingPathComponent("claude-questions", isDirectory: true)
             let latestURL = rootURL.appendingPathComponent("latest-question.json", isDirectory: false)
             startMonitor(at: rootURL)
             startMonitor(at: latestURL)
@@ -112,7 +112,7 @@ final class ProgressStore: ObservableObject {
     private var lastOpenCodeUsageRefreshAt: Date?
     private var lastQuestionRefreshAt: Date?
     private var lastQuestionChangeAt: Date?
-    private let askUserQuestionModeDefaultsKey = "HermitFlow.askUserQuestionHandlingMode"
+    private let askUserQuestionModeDefaultsKey = "ZenIsland.askUserQuestionHandlingMode"
     private let questionStore = QuestionStore()
     private let claudeQuestionSource = ClaudeQuestionSource()
     private let claudeQuestionFileWatcher = ClaudeQuestionFileWatcher()

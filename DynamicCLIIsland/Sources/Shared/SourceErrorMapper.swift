@@ -1,6 +1,6 @@
 //
 //  SourceErrorMapper.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Shared helpers for turning local source failures into structured diagnostics.
 //

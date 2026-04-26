@@ -1,6 +1,6 @@
 //
 //  ClaudeUsageSnapshot.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 6 local-first usage model.
 //

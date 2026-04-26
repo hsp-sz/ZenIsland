@@ -1,6 +1,6 @@
 //
 //  AppEnvironment.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 1 scaffold for the ongoing runtime refactor.
 //

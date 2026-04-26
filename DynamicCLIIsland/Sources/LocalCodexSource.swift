@@ -2116,30 +2116,30 @@ final class LocalClaudeSource: @unchecked Sendable {
 private final class ClaudeHookBridge: @unchecked Sendable {
     static let shared = ClaudeHookBridge()
 
-    private let queue = DispatchQueue(label: "HermitFlow.claudeHookBridge")
-    private let listenerQueue = DispatchQueue(label: "HermitFlow.claudeHookListener")
+    private let queue = DispatchQueue(label: "ZenIsland.claudeHookBridge")
+    private let listenerQueue = DispatchQueue(label: "ZenIsland.claudeHookListener")
     private let listenerPort: UInt16 = 46821
     private let sessionStaleThreshold: TimeInterval = 10 * 60
     private let successDisplayHold: TimeInterval = 1.25
     private let failureDisplayHold: TimeInterval = 2.0
     private let trailingRunningIgnoreWindow: TimeInterval = 2.0
-    private let hookRootURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".hermitflow/claude-hooks")
+    private let hookRootURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".zenisland/claude-hooks")
     private let defaultClaudeRootURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".claude", isDirectory: true)
     private var defaultSettingsURL: URL {
         defaultClaudeRootURL.appendingPathComponent("settings.json", isDirectory: false)
     }
-    private let customSettingsPathsURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".hermitflow/claude-settings-paths.json")
-    private let customSettingsPathsEnvironmentKey = "HERMITFLOW_CLAUDE_SETTINGS_PATHS"
-    private let askUserQuestionModeDefaultsKey = "HermitFlow.askUserQuestionHandlingMode"
-    private let hookScriptName = "hermit-claude-hook.js"
-    private let hookMarker = "hermit-claude-hook.js"
-    private let permissionHookPath = "/permission/hermitflow"
-    private let questionHookPath = "/question/hermitflow"
-    private let askUserQuestionHookPath = "/ask-user/hermitflow"
-    private let claudeUsageCacheURL = URL(fileURLWithPath: "/tmp/hermitflow-rl.json")
-    private let claudeStatusLineDebugURL = URL(fileURLWithPath: "/tmp/hermitflow-claude-statusline-debug.json")
-    private let questionStateRootURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".hermitflow/claude-questions")
-    private let latestQuestionStateURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".hermitflow/claude-questions/latest-question.json")
+    private let customSettingsPathsURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".zenisland/claude-settings-paths.json")
+    private let customSettingsPathsEnvironmentKey = "ZENISLAND_CLAUDE_SETTINGS_PATHS"
+    private let askUserQuestionModeDefaultsKey = "ZenIsland.askUserQuestionHandlingMode"
+    private let hookScriptName = "zenisland-claude-hook.js"
+    private let hookMarker = "zenisland-claude-hook.js"
+    private let permissionHookPath = "/permission/zenisland"
+    private let questionHookPath = "/question/zenisland"
+    private let askUserQuestionHookPath = "/ask-user/zenisland"
+    private let claudeUsageCacheURL = URL(fileURLWithPath: "/tmp/zenisland-rl.json")
+    private let claudeStatusLineDebugURL = URL(fileURLWithPath: "/tmp/zenisland-claude-statusline-debug.json")
+    private let questionStateRootURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".zenisland/claude-questions")
+    private let latestQuestionStateURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".zenisland/claude-questions/latest-question.json")
     private let claudeDebugLogURL = FilePaths.claudeDebugLog
     private let recentHistoryScanBytes = 512 * 1024
     private let recentClaudeProjectFileLimit = 20
@@ -2471,7 +2471,7 @@ private final class ClaudeHookBridge: @unchecked Sendable {
     private func handle(request: ParsedHTTPRequest, on connection: NWConnection) {
         switch (request.method, request.path) {
         case ("GET", "/health"), ("GET", "/state"):
-            let body = "{\"ok\":true,\"app\":\"HermitFlow\",\"port\":\(listenerPort)}"
+            let body = "{\"ok\":true,\"app\":\"ZenIsland\",\"port\":\(listenerPort)}"
             sendHTTPResponse(status: 200, body: body, contentType: "application/json", on: connection)
         case ("POST", "/state"):
             handleState(body: request.body, on: connection)
@@ -3945,9 +3945,9 @@ private final class ClaudeHookBridge: @unchecked Sendable {
 
     private var isClaudeDebugLogEnabled: Bool {
         #if DEBUG
-        return ProcessInfo.processInfo.environment["HERMITFLOW_DISABLE_CLAUDE_DEBUG_LOG"] != "1"
+        return ProcessInfo.processInfo.environment["ZENISLAND_DISABLE_CLAUDE_DEBUG_LOG"] != "1"
         #else
-        return ProcessInfo.processInfo.environment["HERMITFLOW_CLAUDE_DEBUG_LOG"] == "1"
+        return ProcessInfo.processInfo.environment["ZENISLAND_CLAUDE_DEBUG_LOG"] == "1"
         #endif
     }
 
@@ -5126,8 +5126,8 @@ private final class ClaudeHookBridge: @unchecked Sendable {
         [
             "http://127.0.0.1:\(listenerPort)\(questionHookPath)",
             "http://localhost:\(listenerPort)\(questionHookPath)",
-            "http://127.0.0.1:\(listenerPort)/elicitation/hermitflow",
-            "http://localhost:\(listenerPort)/elicitation/hermitflow"
+            "http://127.0.0.1:\(listenerPort)/elicitation/zenisland",
+            "http://localhost:\(listenerPort)/elicitation/zenisland"
         ]
     }
 

@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 1 scaffold for the ongoing runtime refactor.
 //
@@ -18,7 +18,7 @@ enum LoggerCategory: String {
 }
 
 struct Logger {
-    static let defaultLogURL = URL(fileURLWithPath: "/tmp/hermitflow-debug.log")
+    static let defaultLogURL = URL(fileURLWithPath: "/tmp/zenisland-debug.log")
 
     // TODO: Migrate old ad-hoc log writers in AppDelegate and ProgressStore here in Phase 2.
     static func log(_ message: String, category: LoggerCategory, logURL: URL = defaultLogURL) {

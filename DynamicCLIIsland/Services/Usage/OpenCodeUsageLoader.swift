@@ -1,6 +1,6 @@
 //
 //  OpenCodeUsageLoader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  OpenCode third-party provider usage loader.
 //
@@ -611,7 +611,7 @@ enum OpenCodeUsageLoader {
             return
         }
 
-        try fileManager.createDirectory(at: FilePaths.hermitFlowHome, withIntermediateDirectories: true)
+        try fileManager.createDirectory(at: FilePaths.zenIslandHome, withIntermediateDirectories: true)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let data = try encoder.encode(ClaudeProviderUsageConfig.defaultConfig)
@@ -1283,75 +1283,6 @@ struct OpenCodeProviderUsageConfig: Codable, Hashable {
         ),
         providers: [
             OpenCodeProviderDefinition(
-                id: "kimi",
-                displayName: "Kimi",
-                match: OpenCodeProviderMatchRule(
-                    providerIDs: ["kimi", "moonshot"],
-                    baseURLHosts: ["api.kimi.com"],
-                    baseURLPrefixes: ["https://api.kimi.com/coding"],
-                    modelPrefixes: ["kimi", "moonshot"]
-                ),
-                usageRequest: OpenCodeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://api.kimi.com/coding/v1/usages",
-                    authEnvKey: "apiKey",
-                    authHeaderName: nil,
-                    authPrefix: "Bearer ",
-                    headers: ["Accept": "application/json"],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: OpenCodeProviderResponseMapping(fiveHour: nil, sevenDay: nil, fallbackWindow: nil)
-            ),
-            OpenCodeProviderDefinition(
-                id: "zhipu-cn",
-                displayName: "Zhipu",
-                match: OpenCodeProviderMatchRule(
-                    providerIDs: ["zhipu", "zhipu-cn"],
-                    baseURLHosts: ["open.bigmodel.cn", "bigmodel.cn"],
-                    baseURLPrefixes: ["https://open.bigmodel.cn", "https://bigmodel.cn"],
-                    modelPrefixes: ["glm", "zhipu"]
-                ),
-                usageRequest: OpenCodeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://api.z.ai/api/monitor/usage/quota/limit",
-                    authEnvKey: "apiKey",
-                    authHeaderName: "Authorization",
-                    authPrefix: "",
-                    headers: [
-                        "Content-Type": "application/json",
-                        "Accept-Language": "en-US,en"
-                    ],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: OpenCodeProviderResponseMapping(fiveHour: nil, sevenDay: nil, fallbackWindow: nil)
-            ),
-            OpenCodeProviderDefinition(
-                id: "zhipu-en",
-                displayName: "Zhipu",
-                match: OpenCodeProviderMatchRule(
-                    providerIDs: ["zhipu-en"],
-                    baseURLHosts: ["api.z.ai"],
-                    baseURLPrefixes: ["https://api.z.ai"],
-                    modelPrefixes: ["glm", "zhipu"]
-                ),
-                usageRequest: OpenCodeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://api.z.ai/api/monitor/usage/quota/limit",
-                    authEnvKey: "apiKey",
-                    authHeaderName: "Authorization",
-                    authPrefix: "",
-                    headers: [
-                        "Content-Type": "application/json",
-                        "Accept-Language": "en-US,en"
-                    ],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: OpenCodeProviderResponseMapping(fiveHour: nil, sevenDay: nil, fallbackWindow: nil)
-            ),
-            OpenCodeProviderDefinition(
                 id: "zenmux",
                 displayName: "ZenMux",
                 match: OpenCodeProviderMatchRule(
@@ -1385,31 +1316,6 @@ struct OpenCodeProviderUsageConfig: Codable, Hashable {
                         resetAtPaths: ["data.quota_7_day.resets_at"],
                         labelHints: ["quota_7_day", "7_day", "7d"]
                     ),
-                    fallbackWindow: nil
-                )
-            ),
-            OpenCodeProviderDefinition(
-                id: "minmax",
-                displayName: "MinMax",
-                match: OpenCodeProviderMatchRule(
-                    providerIDs: ["minmax"],
-                    baseURLHosts: ["minimaxi.com", "minmax"],
-                    baseURLPrefixes: ["https://www.minimaxi.com/", "https://api.minimax.chat/", "https://api.minimaxi.com/"],
-                    modelPrefixes: ["minmax", "minimax", "MiniMax"]
-                ),
-                usageRequest: OpenCodeProviderUsageRequest(
-                    method: "GET",
-                    url: "https://www.minimaxi.com/v1/api/openplatform/coding_plan/remains",
-                    authEnvKey: "apiKey",
-                    authHeaderName: nil,
-                    authPrefix: "Bearer ",
-                    headers: [:],
-                    query: nil,
-                    body: nil
-                ),
-                responseMapping: OpenCodeProviderResponseMapping(
-                    fiveHour: nil,
-                    sevenDay: nil,
                     fallbackWindow: nil
                 )
             )

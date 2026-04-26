@@ -35,10 +35,10 @@ if [[ "$ARCH_NAME" == "x86_64" ]]; then
   ARCH_LABEL="intel"
 fi
 
-APP_SOURCE_PATH="$DIST_DIR/HermitFlow-$ARCH_LABEL.app"
-DMG_DEST_PATH="$DIST_DIR/HermitFlow-$ARCH_LABEL.dmg"
+APP_SOURCE_PATH="$DIST_DIR/ZenIsland-$ARCH_LABEL.app"
+DMG_DEST_PATH="$DIST_DIR/ZenIsland-$ARCH_LABEL.dmg"
 STAGING_DIR="$DIST_DIR/.dmg-$ARCH_LABEL"
-VOLUME_NAME="HermitFlow-$ARCH_LABEL"
+VOLUME_NAME="ZenIsland-$ARCH_LABEL"
 
 cleanup() {
   rm -rf "$STAGING_DIR"
@@ -56,7 +56,7 @@ rm -rf "$STAGING_DIR" "$DMG_DEST_PATH"
 mkdir -p "$STAGING_DIR"
 
 echo "Preparing DMG contents for $ARCH_LABEL..."
-ditto "$APP_SOURCE_PATH" "$STAGING_DIR/HermitFlow.app"
+ditto "$APP_SOURCE_PATH" "$STAGING_DIR/ZenIsland.app"
 ln -s /Applications "$STAGING_DIR/Applications"
 
 echo "Building DMG..."
