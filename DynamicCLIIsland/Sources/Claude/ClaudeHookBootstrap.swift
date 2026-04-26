@@ -1,6 +1,6 @@
 //
 //  ClaudeHookBootstrap.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Startup bootstrap for Claude hook installation and callback readiness.
 //

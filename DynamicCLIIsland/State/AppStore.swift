@@ -1,6 +1,6 @@
 //
 //  AppStore.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 3 store decomposition.
 //
@@ -64,7 +64,7 @@ final class AppStore: ObservableObject {
             return nil
         }
 
-        return "请在“系统设置 > 隐私与安全性 > 辅助功能”中允许 HermitFlow。"
+        return "请在“系统设置 > 隐私与安全性 > 辅助功能”中允许 ZenIsland。"
     }
 
     // TODO: This bridge surface exists only while views still depend on ProgressStore.

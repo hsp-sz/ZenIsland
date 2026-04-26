@@ -97,7 +97,7 @@ struct QuestionPromptCardView: View {
 
             if !questionStore.supportsSubmission {
                 compactNotice(
-                    text: "Answer in Claude CLI or the Claude extension. HermitFlow is mirroring this prompt only.",
+                    text: "Answer in Claude CLI or the Claude extension. ZenIsland is mirroring this prompt only.",
                     systemImage: "arrow.triangle.branch",
                     tint: accentGreen,
                     fill: Color(red: 0.09, green: 0.11, blue: 0.11)

@@ -1,6 +1,6 @@
 //
 //  OpenCodeUsageSource.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local-first OpenCode usage source.
 //

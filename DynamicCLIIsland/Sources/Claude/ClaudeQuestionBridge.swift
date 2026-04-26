@@ -4,7 +4,7 @@ final class ClaudeQuestionBridge {
     private let rootURL: URL
     private let latestPromptURL: URL
 
-    init(rootURL: URL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".hermitflow/claude-questions")) {
+    init(rootURL: URL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".zenisland/claude-questions")) {
         self.rootURL = rootURL
         latestPromptURL = rootURL.appendingPathComponent("latest-question.json")
     }

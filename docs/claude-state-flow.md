@@ -1,6 +1,6 @@
 # Claude State Flow
 
-This document describes how HermitFlow tracks Claude Code activity today, including the managed hook registration, the local callback server, the in-memory bridge state, and the reducer/UI integration path.
+This document describes how ZenIsland tracks Claude Code activity today, including the managed hook registration, the local callback server, the in-memory bridge state, and the reducer/UI integration path.
 
 ## Overview
 
@@ -14,7 +14,7 @@ The runtime entrypoint is:
 - `DynamicCLIIsland/Sources/Claude/ClaudeHookBootstrap.swift`
 - `DynamicCLIIsland/State/RuntimeStore.swift`
 
-At launch, HermitFlow:
+At launch, ZenIsland:
 
 1. Starts the local Claude callback listener.
 2. Regenerates and resyncs the managed Claude hook entries.
@@ -35,21 +35,21 @@ The local listener is implemented in `LocalCodexSource.swift` through `ClaudeHoo
 - supports `GET /health`
 - supports `GET /state`
 - handles `POST /state`
-- handles `POST /permission/hermitflow`
+- handles `POST /permission/zenisland`
 
 The managed hook script is written to:
 
-- `~/.hermitflow/claude-hooks/hermit-claude-hook.js`
+- `~/.zenisland/claude-hooks/zenisland-claude-hook.js`
 
 Managed Claude settings are synced into:
 
 - `~/.claude/settings.json`
-- extra paths from `~/.hermitflow/claude-settings-paths.json`
-- extra paths from `HERMITFLOW_CLAUDE_SETTINGS_PATHS`
+- extra paths from `~/.zenisland/claude-settings-paths.json`
+- extra paths from `ZENISLAND_CLAUDE_SETTINGS_PATHS`
 
 ## Registered Claude Hooks
 
-HermitFlow registers the following Claude command hooks:
+ZenIsland registers the following Claude command hooks:
 
 - `SessionStart`
 - `SessionEnd`
@@ -73,9 +73,9 @@ Each command hook is registered in the form:
 "<nodePath>" "<scriptPath>" <EVENT>
 ```
 
-HermitFlow also registers:
+ZenIsland also registers:
 
-- `PermissionRequest` as an HTTP hook to `http://127.0.0.1:46821/permission/hermitflow`
+- `PermissionRequest` as an HTTP hook to `http://127.0.0.1:46821/permission/zenisland`
 - `statusLine` as a command hook calling `"<nodePath>" "<scriptPath>" StatusLine`
 
 ## Hook Script State Mapping
@@ -111,8 +111,8 @@ For command hooks, the script sends a payload to `POST /state` including:
 
 For `StatusLine`, the script also:
 
-- writes the raw payload to `/tmp/hermitflow-claude-statusline-debug.json`
-- writes compatible usage windows to `/tmp/hermitflow-rl.json`
+- writes the raw payload to `/tmp/zenisland-claude-statusline-debug.json`
+- writes compatible usage windows to `/tmp/zenisland-rl.json`
 
 ## Bridge Processing
 
@@ -154,7 +154,7 @@ Important rules:
 - `success` is shown for `1.25s`, `failure` for `2.0s`, then both fall back to idle.
 - Sessions older than `10min` without activity are pruned.
 
-HermitFlow also merges discovered sessions from `~/.claude/sessions` so that local Claude sessions can still surface even when the in-memory hook state is incomplete.
+ZenIsland also merges discovered sessions from `~/.claude/sessions` so that local Claude sessions can still surface even when the in-memory hook state is incomplete.
 
 ## Approval Flow
 
@@ -163,7 +163,7 @@ Claude approvals are handled through the local HTTP hook path.
 Flow:
 
 1. Claude triggers `PermissionRequest`.
-2. HermitFlow receives `POST /permission/hermitflow`.
+2. ZenIsland receives `POST /permission/zenisland`.
 3. The bridge creates `ClaudePendingApproval`.
 4. The related Claude session is forced into a running state.
 5. `RuntimeStore.refreshLocalApprovalStatus()` polls `claudeSource.fetchLatestApprovalRequest()`.
@@ -205,8 +205,8 @@ The loader prefers:
 
 The current local files involved in that flow are:
 
-- `/tmp/hermitflow-rl.json`
-- `/tmp/hermitflow-claude-statusline-debug.json`
+- `/tmp/zenisland-rl.json`
+- `/tmp/zenisland-claude-statusline-debug.json`
 
 ## Notes
 

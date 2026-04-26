@@ -1,6 +1,6 @@
 //
 //  GitHubReleaseAssetDownloader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Minimal download helper that saves a GitHub release asset locally and opens it.
 //
@@ -42,7 +42,7 @@ struct GitHubReleaseAssetDownloader: @unchecked Sendable {
 
     func downloadAsset(from remoteURL: URL) async throws -> URL {
         var request = URLRequest(url: remoteURL)
-        request.setValue("HermitFlow", forHTTPHeaderField: "User-Agent")
+        request.setValue("ZenIsland", forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 60
 
         let (temporaryURL, response) = try await session.download(for: request)
@@ -64,7 +64,7 @@ struct GitHubReleaseAssetDownloader: @unchecked Sendable {
         let downloadsDirectory = fileManager.urls(for: .downloadsDirectory, in: .userDomainMask).first
             ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Downloads", isDirectory: true)
         let destinationDirectory = downloadsDirectory.appendingPathComponent(
-            "HermitFlow",
+            "ZenIsland",
             isDirectory: true
         )
         try fileManager.createDirectory(

@@ -1,6 +1,6 @@
 //
 //  OpenCodeSQLiteReader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Read-only fallback for recent OpenCode sessions.
 //
@@ -63,7 +63,7 @@ struct OpenCodeSQLiteReader: @unchecked Sendable {
                 SourceErrorMapper.issue(
                     source: "OpenCode",
                     severity: .info,
-                    message: "OpenCode SQLite state was not found. Live hook events will still work when OpenCode loads the HermitFlow plugin.",
+                    message: "OpenCode SQLite state was not found. Live hook events will still work when OpenCode loads the ZenIsland plugin.",
                     recoverySuggestion: nil,
                     isRepairable: false
                 )

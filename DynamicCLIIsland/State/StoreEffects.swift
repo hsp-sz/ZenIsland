@@ -1,6 +1,6 @@
 //
 //  StoreEffects.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 3 scaffold for store decomposition.
 //

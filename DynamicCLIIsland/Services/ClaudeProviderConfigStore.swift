@@ -2,18 +2,18 @@ import Foundation
 
 struct ClaudeProviderConfigStore {
     private let fileManager: FileManager
-    private let hermitFlowHome: URL
+    private let zenIslandHome: URL
     private let claudeSettingsPathsURL: URL
     private let claudeProviderUsageConfigURL: URL
 
     init(
         fileManager: FileManager = .default,
-        hermitFlowHome: URL = FilePaths.hermitFlowHome,
+        zenIslandHome: URL = FilePaths.zenIslandHome,
         claudeSettingsPathsURL: URL = FilePaths.claudeSettingsPaths,
         claudeProviderUsageConfigURL: URL = FilePaths.claudeProviderUsageConfig
     ) {
         self.fileManager = fileManager
-        self.hermitFlowHome = hermitFlowHome
+        self.zenIslandHome = zenIslandHome
         self.claudeSettingsPathsURL = claudeSettingsPathsURL
         self.claudeProviderUsageConfigURL = claudeProviderUsageConfigURL
     }
@@ -53,20 +53,21 @@ struct ClaudeProviderConfigStore {
         loadClaudeProviderUsageConfig().providers.map { provider in
             ProviderAuthEnvKeyRow(
                 id: provider.id,
+                displayLabel: "API Key",
                 authEnvKey: provider.usageRequest.authEnvKey ?? ""
             )
         }
     }
 
     func updateClaudeSettingsJSON(from rawInput: String) throws {
-        try fileManager.createDirectory(at: hermitFlowHome, withIntermediateDirectories: true)
+        try fileManager.createDirectory(at: zenIslandHome, withIntermediateDirectories: true)
         let normalizedInput = rawInput.trimmingCharacters(in: .whitespacesAndNewlines)
         let text = normalizedInput.isEmpty ? Self.defaultClaudeSettingsJSONText + "\n" : normalizedInput + "\n"
         try Data(text.utf8).write(to: claudeSettingsPathsURL, options: .atomic)
     }
 
     func updateClaudeUsageCommandJSON(from rawInput: String) throws {
-        try fileManager.createDirectory(at: hermitFlowHome, withIntermediateDirectories: true)
+        try fileManager.createDirectory(at: zenIslandHome, withIntermediateDirectories: true)
         var config = loadClaudeProviderUsageConfig()
         let command = try decodeClaudeUsageCommand(from: rawInput.trimmingCharacters(in: .whitespacesAndNewlines))
         config.usageCommand = command
@@ -74,7 +75,7 @@ struct ClaudeProviderConfigStore {
     }
 
     func updateClaudeProviderUsageAuthEnvKey(providerID: String, value: String) throws {
-        try fileManager.createDirectory(at: hermitFlowHome, withIntermediateDirectories: true)
+        try fileManager.createDirectory(at: zenIslandHome, withIntermediateDirectories: true)
         var config = loadClaudeProviderUsageConfig()
         guard let index = config.providers.firstIndex(where: { $0.id == providerID }) else {
             return

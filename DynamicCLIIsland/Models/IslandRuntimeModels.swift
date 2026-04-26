@@ -1,52 +1,22 @@
 import Foundation
 
 enum IslandBrandLogo: String {
-    case hermit
-    case clawd
     case zenmux
-    case claudeCodeColor
-    case codexColor
-    case codexMono
-    case openAI
     case custom
 
     var resourceName: String {
         switch self {
-        case .hermit:
-            return "hermit"
-        case .clawd:
-            return "claudecode"
         case .zenmux:
             return "zenmux"
-        case .claudeCodeColor:
-            return "claudecode-v10"
-        case .codexColor:
-            return "codex-color"
-        case .codexMono:
-            return "codex"
-        case .openAI:
-            return "openai"
         case .custom:
-            return IslandBrandLogo.clawd.resourceName
+            return IslandBrandLogo.zenmux.resourceName
         }
     }
 
     var menuTitle: String {
         switch self {
-        case .hermit:
-            return "Hermit"
-        case .clawd:
-            return "Clawd"
         case .zenmux:
             return "ZenMux"
-        case .claudeCodeColor:
-            return "Claude Code"
-        case .codexColor:
-            return "Codex Color"
-        case .codexMono:
-            return "Codex Mono"
-        case .openAI:
-            return "OpenAI"
         case .custom:
             return "Custom"
         }

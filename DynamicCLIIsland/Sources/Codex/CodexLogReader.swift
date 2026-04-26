@@ -1,6 +1,6 @@
 //
 //  CodexLogReader.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local Codex log discovery for diagnostics and fallback context.
 //

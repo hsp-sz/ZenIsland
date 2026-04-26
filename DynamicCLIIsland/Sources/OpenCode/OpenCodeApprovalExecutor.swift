@@ -1,6 +1,6 @@
 //
 //  OpenCodeApprovalExecutor.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Resolves OpenCode permission prompts through the OpenCode server API.
 //

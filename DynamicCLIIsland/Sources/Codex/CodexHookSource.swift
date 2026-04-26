@@ -1,6 +1,6 @@
 //
 //  CodexHookSource.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Optional real-time Codex file event source. File-based polling remains the fallback path.
 //
@@ -22,7 +22,7 @@ final class CodexHookSource: @unchecked Sendable {
     init(
         source: LocalCodexSource = LocalCodexSource(),
         sessionReader: CodexSessionReader = CodexSessionReader(),
-        queue: DispatchQueue = DispatchQueue(label: "HermitFlow.codexHookSource", qos: .utility)
+        queue: DispatchQueue = DispatchQueue(label: "ZenIsland.codexHookSource", qos: .utility)
     ) {
         self.source = source
         self.sessionReader = sessionReader

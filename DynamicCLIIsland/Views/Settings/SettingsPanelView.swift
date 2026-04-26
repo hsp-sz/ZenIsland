@@ -63,6 +63,7 @@ private struct PlainJSONEditor: NSViewRepresentable {
 
 struct ProviderAuthEnvKeyRow: Identifiable, Equatable {
     let id: String
+    let displayLabel: String
     let authEnvKey: String
 }
 
@@ -70,13 +71,14 @@ private struct ProviderAuthEnvKeyFieldRow: View {
     let row: ProviderAuthEnvKeyRow
     let refreshToken: Int
     let onSubmit: (String, String) -> Void
+    let onActivate: () -> Void
 
     @State private var input = ""
     @State private var lastSubmitted = ""
 
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
-            Text(row.id)
+            Text(row.displayLabel)
                 .font(.system(size: 11, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.white.opacity(0.82))
                 .frame(width: 112, alignment: .leading)
@@ -101,6 +103,26 @@ private struct ProviderAuthEnvKeyFieldRow: View {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(Color.white.opacity(0.07), lineWidth: 1)
             )
+
+            Button(action: {
+                submit()
+                onActivate()
+            }) {
+                Text("Activate")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.88))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(Color.white.opacity(0.08))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                    )
+            }
+            .buttonStyle(.plain)
         }
         .onAppear {
             syncFromRow(force: true)
@@ -186,6 +208,7 @@ struct SettingsPanelView: View {
     let providerAuthRows: () -> [ProviderAuthEnvKeyRow]
     let providerAuthRefreshToken: () -> Int
     let onProviderAuthEnvKeySubmit: (String, String) -> Void
+    let onActivateUsage: () -> Void
     @State private var claudeUsageCommandInput = ""
     @State private var claudeUsageCommandLastSubmitted = ""
     @State private var claudeSettingsInput = ""
@@ -200,15 +223,16 @@ struct SettingsPanelView: View {
             VStack(alignment: .leading, spacing: 14) {
                 quickSettingsSection
 
-                settingsSection(title: "usage-auth", systemImage: "key.horizontal") {
-                    insetSurface(minHeight: 148, maxHeight: 188) {
+                settingsSection(title: "Platform API", systemImage: "key.horizontal") {
+                    insetSurface(minHeight: 52, maxHeight: 60) {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(authRows) { row in
                                     ProviderAuthEnvKeyFieldRow(
                                         row: row,
                                         refreshToken: providerAuthRefreshToken(),
-                                        onSubmit: onProviderAuthEnvKeySubmit
+                                        onSubmit: onProviderAuthEnvKeySubmit,
+                                        onActivate: onActivateUsage
                                     )
                                 }
                             }
@@ -333,7 +357,7 @@ struct SettingsPanelView: View {
                                 }
 
                                 Button("恢复内置 Logo") {
-                                    store.selectLogo(.clawd)
+                                    store.selectLogo(.zenmux)
                                 }
 
                                 Button("移除自定义 Logo") {
@@ -716,7 +740,7 @@ struct SettingsPanelView: View {
     }
 
     private var availableLogos: [IslandBrandLogo] {
-        [.hermit, .clawd, .zenmux, .claudeCodeColor, .codexColor, .codexMono, .openAI]
+        [.zenmux]
     }
 
     private func submitClaudeSettings() {

@@ -3,18 +3,18 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PROJECT_PATH="$PROJECT_ROOT/HermitFlow.xcodeproj"
-SCHEME="HermitFlow"
+PROJECT_PATH="$PROJECT_ROOT/ZenIsland.xcodeproj"
+SCHEME="ZenIsland"
 CONFIGURATION="${1:-Release}"
 ARCH_INPUT="${2:-native}"
 DERIVED_DATA_PARENT="$PROJECT_ROOT/.DerivedDataPackage"
 DERIVED_DATA_PATH="$(mktemp -d "$DERIVED_DATA_PARENT.XXXXXX")"
 BUILD_PRODUCTS_PATH="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION"
-APP_SOURCE_PATH="$BUILD_PRODUCTS_PATH/HermitFlow.app"
+APP_SOURCE_PATH="$BUILD_PRODUCTS_PATH/ZenIsland.app"
 DIST_DIR="$PROJECT_ROOT/dist"
 PKG_SCRIPTS_DIR="$PROJECT_ROOT/scripts/pkg"
 STAGING_DIR="$DIST_DIR/.pkgbuild"
-APP_STAGING_PATH="$STAGING_DIR/HermitFlow.app"
+APP_STAGING_PATH="$STAGING_DIR/ZenIsland.app"
 
 if [[ "$CONFIGURATION" != "Release" && "$CONFIGURATION" != "Debug" ]]; then
   echo "Unsupported configuration: $CONFIGURATION"
@@ -45,8 +45,8 @@ if [[ "$ARCH_NAME" == "x86_64" ]]; then
 fi
 
 DESTINATION="platform=macOS,arch=$ARCH_NAME"
-APP_DEST_PATH="$DIST_DIR/HermitFlow-$ARCH_LABEL.app"
-PKG_DEST_PATH="$DIST_DIR/HermitFlow-$ARCH_LABEL.pkg"
+APP_DEST_PATH="$DIST_DIR/ZenIsland-$ARCH_LABEL.app"
+PKG_DEST_PATH="$DIST_DIR/ZenIsland-$ARCH_LABEL.pkg"
 
 cleanup() {
   rm -rf "$DERIVED_DATA_PATH"
@@ -95,8 +95,8 @@ if [[ "$PACKAGE_INFO" != *'install-location="/Applications"'* ]]; then
 fi
 
 PAYLOAD_FILES="$(pkgutil --payload-files "$PKG_DEST_PATH")"
-if [[ "$PAYLOAD_FILES" != *'./HermitFlow.app'* ]]; then
-  echo "Installer verification failed: payload does not contain HermitFlow.app"
+if [[ "$PAYLOAD_FILES" != *'./ZenIsland.app'* ]]; then
+  echo "Installer verification failed: payload does not contain ZenIsland.app"
   exit 1
 fi
 

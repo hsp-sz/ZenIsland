@@ -1,6 +1,6 @@
 //
 //  OpenCodeUsageSnapshot.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local-first OpenCode third-party provider usage model.
 //

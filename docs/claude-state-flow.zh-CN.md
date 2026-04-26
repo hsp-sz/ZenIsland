@@ -1,6 +1,6 @@
 # Claude 当前状态流转
 
-本文档说明 HermitFlow 当前如何追踪 Claude Code 状态，包括 managed hook 注册、本地回调监听、内存 bridge 状态，以及最终进入 reducer 和 UI 的链路。
+本文档说明 ZenIsland 当前如何追踪 Claude Code 状态，包括 managed hook 注册、本地回调监听、内存 bridge 状态，以及最终进入 reducer 和 UI 的链路。
 
 ## 总览
 
@@ -14,7 +14,7 @@ Claude 状态不是一份独立的状态机配置文件。当前实现由 `Claud
 - `DynamicCLIIsland/Sources/Claude/ClaudeHookBootstrap.swift`
 - `DynamicCLIIsland/State/RuntimeStore.swift`
 
-应用启动时，HermitFlow 会：
+应用启动时，ZenIsland 会：
 
 1. 启动本地 Claude 回调监听器。
 2. 重写并重新同步 managed Claude hook。
@@ -35,21 +35,21 @@ Claude 状态不是一份独立的状态机配置文件。当前实现由 `Claud
 - 支持 `GET /health`
 - 支持 `GET /state`
 - 处理 `POST /state`
-- 处理 `POST /permission/hermitflow`
+- 处理 `POST /permission/zenisland`
 
 managed hook 脚本会写到：
 
-- `~/.hermitflow/claude-hooks/hermit-claude-hook.js`
+- `~/.zenisland/claude-hooks/zenisland-claude-hook.js`
 
 managed Claude settings 会同步到：
 
 - `~/.claude/settings.json`
-- `~/.hermitflow/claude-settings-paths.json` 里声明的额外路径
-- `HERMITFLOW_CLAUDE_SETTINGS_PATHS` 环境变量里声明的额外路径
+- `~/.zenisland/claude-settings-paths.json` 里声明的额外路径
+- `ZENISLAND_CLAUDE_SETTINGS_PATHS` 环境变量里声明的额外路径
 
 ## 注册到 Claude 的 Hook
 
-HermitFlow 当前会注册以下 Claude command hook：
+ZenIsland 当前会注册以下 Claude command hook：
 
 - `SessionStart`
 - `SessionEnd`
@@ -75,7 +75,7 @@ HermitFlow 当前会注册以下 Claude command hook：
 
 另外还会注册：
 
-- `PermissionRequest`，作为 HTTP hook 指向 `http://127.0.0.1:46821/permission/hermitflow`
+- `PermissionRequest`，作为 HTTP hook 指向 `http://127.0.0.1:46821/permission/zenisland`
 - `statusLine`，作为 command hook 调用 `"<nodePath>" "<scriptPath>" StatusLine`
 
 ## Hook 脚本中的事件映射
@@ -111,8 +111,8 @@ HermitFlow 当前会注册以下 Claude command hook：
 
 对于 `StatusLine`，脚本还会额外：
 
-- 把原始 payload 写到 `/tmp/hermitflow-claude-statusline-debug.json`
-- 把兼容的额度窗口写到 `/tmp/hermitflow-rl.json`
+- 把原始 payload 写到 `/tmp/zenisland-claude-statusline-debug.json`
+- 把兼容的额度窗口写到 `/tmp/zenisland-rl.json`
 
 ## Bridge 如何处理事件
 
@@ -154,7 +154,7 @@ Bridge 在生成 UI 快照前，不只看 hook 事件，还会结合本地 Claud
 - `success` 只显示 `1.25s`，`failure` 只显示 `2.0s`，之后都会回落为 idle。
 - 超过 `10min` 无活动的 session 会被清理。
 
-HermitFlow 还会从 `~/.claude/sessions` 里补发现 session，所以即便内存里的 hook 状态不完整，本地 Claude session 仍可能显示出来。
+ZenIsland 还会从 `~/.claude/sessions` 里补发现 session，所以即便内存里的 hook 状态不完整，本地 Claude session 仍可能显示出来。
 
 ## 审批流
 
@@ -163,7 +163,7 @@ Claude 审批通过本地 HTTP hook 完成。
 链路如下：
 
 1. Claude 触发 `PermissionRequest`。
-2. HermitFlow 收到 `POST /permission/hermitflow`。
+2. ZenIsland 收到 `POST /permission/zenisland`。
 3. Bridge 创建 `ClaudePendingApproval`。
 4. 对应的 Claude session 会被强制标成 running。
 5. `RuntimeStore.refreshLocalApprovalStatus()` 轮询 `claudeSource.fetchLatestApprovalRequest()`。
@@ -205,8 +205,8 @@ Claude 额度通过 `ClaudeUsageLoader.load()` 加载。
 
 当前链路涉及的本地文件有：
 
-- `/tmp/hermitflow-rl.json`
-- `/tmp/hermitflow-claude-statusline-debug.json`
+- `/tmp/zenisland-rl.json`
+- `/tmp/zenisland-claude-statusline-debug.json`
 
 ## 说明
 

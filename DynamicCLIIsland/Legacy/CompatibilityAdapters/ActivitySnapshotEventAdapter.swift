@@ -1,6 +1,6 @@
 //
 //  ActivitySnapshotEventAdapter.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 4 snapshot-to-event bridge.
 //

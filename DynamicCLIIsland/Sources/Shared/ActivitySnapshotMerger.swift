@@ -1,6 +1,6 @@
 //
 //  ActivitySnapshotMerger.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 4 shared source helpers.
 //

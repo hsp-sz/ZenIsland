@@ -131,8 +131,8 @@ final class DotMatrixSpinnerNSView: NSView {
     private let dotSize: CGFloat = 4.6
     private let dotSpacing: CGFloat = 0
     private let glyphSize: CGFloat = 16.5
-    private let activeAnimationKey = "HermitFlow.spinner.activeOpacity"
-    private let scaleAnimationKey = "HermitFlow.spinner.activeScale"
+    private let activeAnimationKey = "ZenIsland.spinner.activeOpacity"
+    private let scaleAnimationKey = "ZenIsland.spinner.activeScale"
 
     private let baseColor = NSColor(
         calibratedRed: 51 / 255,

@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A10000000000000000000040"
-               BuildableName = "HermitFlow.app"
-               BlueprintName = "HermitFlow"
-               ReferencedContainer = "container:HermitFlow.xcodeproj">
+               BuildableName = "ZenIsland.app"
+               BlueprintName = "ZenIsland"
+               ReferencedContainer = "container:ZenIsland.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,9 +30,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A30000000000000000000040"
-               BuildableName = "HermitFlowTests.xctest"
-               BlueprintName = "HermitFlowTests"
-               ReferencedContainer = "container:HermitFlow.xcodeproj">
+               BuildableName = "ZenIslandTests.xctest"
+               BlueprintName = "ZenIslandTests"
+               ReferencedContainer = "container:ZenIsland.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,9 +50,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A30000000000000000000040"
-               BuildableName = "HermitFlowTests.xctest"
-               BlueprintName = "HermitFlowTests"
-               ReferencedContainer = "container:HermitFlow.xcodeproj">
+               BuildableName = "ZenIslandTests.xctest"
+               BlueprintName = "ZenIslandTests"
+               ReferencedContainer = "container:ZenIsland.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10000000000000000000040"
-            BuildableName = "HermitFlow.app"
-            BlueprintName = "HermitFlow"
-            ReferencedContainer = "container:HermitFlow.xcodeproj">
+            BuildableName = "ZenIsland.app"
+            BlueprintName = "ZenIsland"
+            ReferencedContainer = "container:ZenIsland.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -89,9 +89,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10000000000000000000040"
-            BuildableName = "HermitFlow.app"
-            BlueprintName = "HermitFlow"
-            ReferencedContainer = "container:HermitFlow.xcodeproj">
+            BuildableName = "ZenIsland.app"
+            BlueprintName = "ZenIsland"
+            ReferencedContainer = "container:ZenIsland.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

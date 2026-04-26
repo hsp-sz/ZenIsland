@@ -1,6 +1,6 @@
 //
 //  OpenCodeUsageCardView.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Local-first OpenCode usage view.
 //

@@ -1,6 +1,6 @@
 //
 //  ApprovalInlineView.swift
-//  HermitFlow
+//  ZenIsland
 //
 //  Phase 5 approval presentation wrapper.
 //
